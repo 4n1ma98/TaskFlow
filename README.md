@@ -64,7 +64,7 @@ http://localhost:8080/swagger
 
 - Motor: SQL Server
 - Usuario: sa
-- Password: Your_password123
+- Password: A15d14dd2113
 - Puerto: 1433
 
 ---
