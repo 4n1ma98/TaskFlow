@@ -1,0 +1,27 @@
+# Build artifacts
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node (por si agregas frontend después)
+node_modules/
+
+# Docker (archivos locales opcionales)
+docker-compose.override.yml
+
+# VS Code (opcional)
+.vscode/
+
+# Rider (opcional)
+.idea/
