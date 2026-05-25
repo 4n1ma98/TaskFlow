@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Business.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models.Responses;
 
 namespace Api_TaskFlow.Controllers
 {
@@ -7,36 +9,45 @@ namespace Api_TaskFlow.Controllers
     [ApiController]
     public class TasksController : ControllerBase
     {
+        private readonly ITaskService iTaskService;
+        public TasksController(ITaskService taskService)
+        {
+            iTaskService = taskService;
+        }
+
         [HttpGet("[action]")]
         public async Task<IActionResult> GetTasks()
         {
-            var tasks = new List<string> { "Task 1", "Task 2", "Task 3" };
-            return Ok(tasks);
+            GenericResult resultCallApi = await iTaskService.GetTasksAsync();
+            return Ok(resultCallApi);
         }
         
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> GetTaskById(int id)
         {
-            var task = $"Task {id}";
-            return Ok(task);
+            GenericResult resultCallApi = await iTaskService.GetTaskByIdAsync(id);
+            return Ok(resultCallApi);
         }
         
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateTask([FromBody] string task)
         {
-            return CreatedAtAction(nameof(GetTaskById), new { id = 4 }, task);
+            GenericResult resultCallApi = await iTaskService.CreateTaskAsync(task);
+            return Ok(resultCallApi);
         }
         
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> UpdateTask(int id, [FromBody] string task)
         {
-            return NoContent();
+            GenericResult resultCallApi = await iTaskService.UpdateTaskAsync(id, task);
+            return Ok(resultCallApi);
         }
         
         [HttpDelete("[action]/{id}")]
         public async Task<IActionResult> DeleteTask(int id)
         {
-            return NoContent();
+            GenericResult resultCallApi = await iTaskService.DeleteTaskAsync(id);
+            return Ok(resultCallApi);
         }
     }
 }
