@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: Api_TaskFlow
+    image: apitaskflow
+    build:
+      context: .
+      dockerfile: Api_TaskFlow/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - sqlserver
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: Server=sqlserver;Database=TaskFlowDB;User=sa;Password=A15d14dd2113;TrustServerCertificate=True;
+    restart: on-failure
+
+  sqlserver:
+    container_name: taskflow-sql
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "A15d14dd2113"
+    volumes:
+      - sql_data:/var/opt/mssql
+    restart: unless-stopped
+
+volumes:
+  sql_data:
