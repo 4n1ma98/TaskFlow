@@ -1,5 +1,6 @@
 using Business.Services;
 using Business.Services.Interfaces;
+using DataAccess.Db;
 using DataAccess.Repositories;
 using DataAccess.Repositories.Interfaces;
 
@@ -10,6 +11,13 @@ namespace Api_TaskFlow
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // 1. Extraer el String Connection de forma segura desde el appsettings.json
+            string connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+                ?? throw new InvalidOperationException("La cadena de conexión 'DefaultConnection' no está configurada.");
+
+            // 2. Registrar la Fábrica de Conexiones como Singleton pasando el string obtenido
+            builder.Services.AddSingleton<IDbConnectionFactory>(new SqlConnectionFactory(connectionString));
 
             // Add services to the container.
             builder.Services.AddScoped<ITaskRepository, TaskRepository>();
