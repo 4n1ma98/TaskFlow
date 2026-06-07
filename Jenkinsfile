@@ -1,14 +1,7 @@
 pipeline {
-	agent any
+    agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main',
-                    url: 'https://github.com/4n1ma98/TaskFlow.git',
-                    credentialsId: '4d557b37-b11e-4327-9bee-22df3da8e7dd'
-            }
-        }
 
         stage('Restore') {
             steps {
@@ -21,15 +14,6 @@ pipeline {
                 sh 'dotnet build Api_TaskFlow.sln --configuration Release'
             }
         }
-
-		stage('Debug') {
-			steps {
-				sh 'which docker || true'
-				sh 'which docker-compose || true'
-				sh 'docker --version || true'
-				sh 'docker-compose --version || true'
-			}
-		}
 
         stage('Docker Build & Deploy') {
             steps {
