@@ -27,6 +27,15 @@ pipeline {
             }
         }
 
+		stage('Debug') {
+			steps {
+				sh 'which docker || true'
+				sh 'which docker-compose || true'
+				sh 'docker --version || true'
+				sh 'docker-compose --version || true'
+			}
+		}
+
         stage('Docker Build & Deploy') {
             steps {
                 sh 'docker-compose build'
