@@ -1,0 +1,38 @@
+name: .NET CI
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore Api_TaskFlow.sln
+
+      - name: Build solution
+        run: dotnet build Api_TaskFlow.sln --no-restore
+
+      - name: Run tests
+        run: dotnet test Api_TaskFlow.sln --no-build --verbosity normal
+        
+  deploy:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Simulated Deployment
+        run: echo "Pruebas en verde. Desplegando API de TaskFlow a producción..."
