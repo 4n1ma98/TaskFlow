@@ -86,6 +86,6 @@ public class TaskServiceTests
 
         // Assert
         Assert.True(result.IsSuccesfull);
-        Assert.Equal("Tarea creada", result.Message);
+        Assert.Equal("Tarea eliminada", result.Message);
     }
 }
