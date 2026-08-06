@@ -8,19 +8,18 @@ namespace Models.Common
 {
     public enum ResultCode
     {
-        // Éxito (0 - 99)
-        Success = 0,
         Created = 1,
         Updated = 2,
         Deleted = 3,
 
-        // Errores de Negocio / Validaciones (100 - 199)
+        // Errores de Negocio
+        Success = 0,
         NotFound = 100,
         BadRequest = 101,
         ClientHasProducts = 102,
         ProductTypeNotFound = 103,
 
-        // Error Inesperado (500)
+        // Error Inesperado
         InternalError = 500
     }
 

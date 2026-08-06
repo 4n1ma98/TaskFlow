@@ -89,7 +89,7 @@ namespace Business.Services
                 return GenericResult.ErrorResult(ResultCode.NotFound, $"No se encontró el cliente con ID {id}.");
             }
 
-            // Regla de Negocio clave: No se pueden eliminar clientes con productos asociados
+            // No se pueden eliminar clientes con productos asociados
             var hasProducts = await _clientRepository.HasProductsAsync(id);
             if (hasProducts)
             {
