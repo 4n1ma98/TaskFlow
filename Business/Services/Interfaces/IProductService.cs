@@ -10,7 +10,7 @@ namespace Business.Services.Interfaces
 {
     public interface IProductService
     {
-        Task<GenericResult> GetProductsByIdentificationAsync(int identificationNumber);
+        Task<GenericResult> GetProductsByIdentificationAsync(string clientIdentificacion);
         Task<GenericResult> CreateProductAsync(CreateProductRequest request);
     }
 }

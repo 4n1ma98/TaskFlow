@@ -38,6 +38,17 @@ namespace Business.Services
             return GenericResult.SuccessResult(data: client);
         }
 
+        public async Task<GenericResult> GetClientByIdentificationAsync(string identification)
+        {
+            var client = await _clientRepository.GetByIdentificationAsync(identification);
+            if (client == null)
+            {
+                return GenericResult.ErrorResult(ResultCode.NotFound, $"No se encontró el cliente con número de identificación {identification}.");
+            }
+
+            return GenericResult.SuccessResult(data: client);
+        }
+
         public async Task<GenericResult> CreateClientAsync(CreateClientRequest request)
         {
             var existingClient = await _clientRepository.GetByIdentificationAsync(request.IdentificationNumber);

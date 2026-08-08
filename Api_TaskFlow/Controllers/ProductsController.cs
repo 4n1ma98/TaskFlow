@@ -19,11 +19,11 @@ namespace Api_TaskFlow.Controllers
         /// <summary>
         /// Consultar productos financieros por identificación del cliente
         /// </summary>
-        [HttpGet("by-client/{identificationNumber:int}")]
-        public async Task<IActionResult> GetByClient(int identificationNumber)
+        [HttpGet("ByClientIdentification/{clientIdentification}")]
+        public async Task<IActionResult> GetByClient(string clientIdentification)
         {
-            var result = await _productService.GetProductsByIdentificationAsync(identificationNumber);
-            if (!result.IsSuccesfull)
+            var result = await _productService.GetProductsByIdentificationAsync(clientIdentification);
+            if (!result.IsSuccessful)
             {
                 if (result.Id == (int)ResultCode.NotFound) return NotFound(result);
                 return BadRequest(result);
@@ -38,7 +38,7 @@ namespace Api_TaskFlow.Controllers
         public async Task<IActionResult> Create([FromBody] CreateProductRequest request)
         {
             var result = await _productService.CreateProductAsync(request);
-            if (!result.IsSuccesfull)
+            if (!result.IsSuccessful)
             {
                 if (result.Id == (int)ResultCode.NotFound) return NotFound(result);
                 return BadRequest(result);

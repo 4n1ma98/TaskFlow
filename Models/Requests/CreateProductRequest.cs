@@ -18,7 +18,7 @@ namespace Models.Requests
         public int ProductTypeId { get; set; }
 
         [Required(ErrorMessage = "El ID del cliente es obligatorio.")]
-        [StringLength(30, ErrorMessage = "El ID del cliente no puede exceder los 30 caracteres.")]
-        public string ClientId { get; set; } = null!;
+        [Range(1, int.MaxValue, ErrorMessage = "Debe especificar un ID de tipo de producto válido.")]
+        public int ClientId { get; set; }
     }
 }

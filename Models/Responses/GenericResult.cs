@@ -5,7 +5,7 @@ namespace Models.Responses
     public class GenericResult
     {
         public int Id { get; set; }
-        public bool IsSuccesfull { get; set; }
+        public bool IsSuccessful { get; set; }
         public string Message { get; set; } = string.Empty;
         public object? Data { get; set; }
 
@@ -17,7 +17,7 @@ namespace Models.Responses
             return new GenericResult
             {
                 Id = (int)code,
-                IsSuccesfull = true,
+                IsSuccessful = true,
                 Message = customMessage ?? code.GetDefaultMessage(),
                 Data = data
             };
@@ -31,7 +31,7 @@ namespace Models.Responses
             return new GenericResult
             {
                 Id = (int)code,
-                IsSuccesfull = false,
+                IsSuccessful = false,
                 Message = customMessage ?? code.GetDefaultMessage(),
                 Data = null
             };

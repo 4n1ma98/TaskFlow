@@ -1,14 +1,15 @@
-﻿using Business.Services.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Azure.Core;
+using Business.Services.Interfaces;
 using DataAccess.Repositories.Interfaces;
 using Models.Common;
 using Models.Entities;
 using Models.Requests;
 using Models.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Services
 {
@@ -29,15 +30,15 @@ namespace Business.Services
         }
 
         // Consultar los productos financieros por identificación del cliente
-        public async Task<GenericResult> GetProductsByIdentificationAsync(int identificationNumber)
+        public async Task<GenericResult> GetProductsByIdentificationAsync(string clientIdentificacion)
         {
-            var client = await _clientService.GetClientByIdAsync(identificationNumber);
-            if (client == null)
+            var client = await _clientService.GetClientByIdentificationAsync(clientIdentificacion);
+            if (!client.IsSuccessful)
             {
-                return GenericResult.ErrorResult(ResultCode.NotFound, $"No se encontró un cliente con la identificación {identificationNumber}.");
+                return GenericResult.ErrorResult(ResultCode.NotFound, $"No existe un cliente registrado con la identificación {clientIdentificacion}.");
             }
 
-            var products = await _productRepository.GetProductsByIdentificationAsync(identificationNumber.ToString());
+            var products = await _productRepository.GetProductsByClientIdAsync(((Client)client.Data!).Id);
             return GenericResult.SuccessResult(data: products);
         }
 
@@ -45,10 +46,10 @@ namespace Business.Services
         public async Task<GenericResult> CreateProductAsync(CreateProductRequest request)
         {
             // 1. Validar que el cliente exista
-            var client = await _clientService.GetClientByIdAsync(Convert.ToInt32(request.ClientId));
-            if (!client.IsSuccesfull)
+            var client = await _clientService.GetClientByIdAsync(request.ClientId);
+            if (!client.IsSuccessful)
             {
-                return GenericResult.ErrorResult(ResultCode.NotFound, $"No existe un cliente registrado con la identificación {request.ClientId}.");
+                return GenericResult.ErrorResult(ResultCode.NotFound, $"No existe un cliente registrado con ID {request.ClientId}.");
             }
 
             // 2. Validar que el tipo de producto exista en el catálogo
@@ -63,7 +64,7 @@ namespace Business.Services
             {
                 Name = request.Name,
                 ProductTypeId = request.ProductTypeId,
-                ClientId = ((Client)client.Data!).Id,
+                ClientId = request.ClientId,
                 IsActive = true
             };
 

@@ -10,7 +10,7 @@ namespace DataAccess.Repositories.Interfaces
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<ClientProductResponse>> GetProductsByIdentificationAsync(string identificationNumber);
+        Task<IEnumerable<ClientProductResponse>> GetProductsByClientIdAsync(int clientId);
         Task<Product> CreateAsync(Product product);
     }
 }

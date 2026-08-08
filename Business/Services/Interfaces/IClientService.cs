@@ -12,6 +12,7 @@ namespace Business.Services.Interfaces
     {
         Task<GenericResult> GetAllClientsAsync();
         Task<GenericResult> GetClientByIdAsync(int id);
+        Task<GenericResult> GetClientByIdentificationAsync(string identification);
         Task<GenericResult> CreateClientAsync(CreateClientRequest request);
         Task<GenericResult> UpdateClientAsync(UpdateClientRequest request);
         Task<GenericResult> DeleteClientAsync(int id);

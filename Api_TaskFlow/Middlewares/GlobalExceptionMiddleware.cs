@@ -19,7 +19,7 @@ namespace Api_TaskFlow.Middlewares
             {
                 await _next(context);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Registras el log si lo deseas
                 context.Response.ContentType = "application/json";

@@ -19,11 +19,11 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<ClientProductResponse>> GetProductsByIdentificationAsync(string identificationNumber)
+        public async Task<IEnumerable<ClientProductResponse>> GetProductsByClientIdAsync(int clientId)
         {
             return await _context.Products
                 .AsNoTracking()
-                .Where(p => p.Client.IdentificationNumber == identificationNumber)
+                .Where(p => p.Client.Id == clientId)
                 .Select(p => new ClientProductResponse
                 {
                     DocumentType = p.Client.DocumentType,

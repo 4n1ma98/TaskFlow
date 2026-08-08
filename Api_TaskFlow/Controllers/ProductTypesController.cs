@@ -17,7 +17,7 @@ namespace Api_TaskFlow.Controllers
         /// <summary>
         /// Obtiene el catálogo de tipos de productos paramétricos (Cuentas, Tarjetas, Préstamos, etc.)
         /// </summary>
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
             var result = await _productTypeService.GetAllProductTypesAsync();
