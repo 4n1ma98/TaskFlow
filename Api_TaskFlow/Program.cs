@@ -1,9 +1,11 @@
+using System.Reflection;
 using Api_TaskFlow.Middlewares;
 using Business.Services;
 using Business.Services.Interfaces;
 using DataAccess.Repositories;
 using DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace Api_TaskFlow
 {
@@ -29,7 +31,20 @@ namespace Api_TaskFlow
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Financial Products API",
+                    Version = "v1",
+                    Description = "API RESTful para la gestión de clientes y productos financieros."
+                });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+                options.IncludeXmlComments(xmlPath);
+            });
 
             var app = builder.Build();
 
