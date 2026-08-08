@@ -56,7 +56,7 @@ namespace Business.Services
             var productTypeExists = await _productTypeService.ExistsAsync(request.ProductTypeId);
             if (!productTypeExists)
             {
-                return GenericResult.ErrorResult(ResultCode.NotFound, $"El Tipo de Producto con ID {request.ProductTypeId} no existe en el catálogo.");
+                return GenericResult.ErrorResult(ResultCode.ProductTypeNotFound, $"El Tipo de Producto con ID {request.ProductTypeId} no existe en el catálogo.");
             }
 
             // 3. Crear y asociar el nuevo producto
