@@ -15,29 +15,29 @@ namespace Business.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-        private readonly IClientRepository _clientRepository;
-        private readonly IProductTypeRepository _productTypeRepository;
+        private readonly IClientService _clientService;
+        private readonly IProductTypeService _productTypeService;
 
         public ProductService(
             IProductRepository productRepository,
-            IClientRepository clientRepository,
-            IProductTypeRepository productTypeRepository)
+            IClientService clientService,
+            IProductTypeService productTypeService)
         {
             _productRepository = productRepository;
-            _clientRepository = clientRepository;
-            _productTypeRepository = productTypeRepository;
+            _clientService = clientService;
+            _productTypeService = productTypeService;
         }
 
         // Consultar los productos financieros por identificación del cliente
-        public async Task<GenericResult> GetProductsByIdentificationAsync(string identificationNumber)
+        public async Task<GenericResult> GetProductsByIdentificationAsync(int identificationNumber)
         {
-            var client = await _clientRepository.GetByIdentificationAsync(identificationNumber);
+            var client = await _clientService.GetClientByIdAsync(identificationNumber);
             if (client == null)
             {
                 return GenericResult.ErrorResult(ResultCode.NotFound, $"No se encontró un cliente con la identificación {identificationNumber}.");
             }
 
-            var products = await _productRepository.GetProductsByIdentificationAsync(identificationNumber);
+            var products = await _productRepository.GetProductsByIdentificationAsync(identificationNumber.ToString());
             return GenericResult.SuccessResult(data: products);
         }
 
@@ -45,14 +45,14 @@ namespace Business.Services
         public async Task<GenericResult> CreateProductAsync(CreateProductRequest request)
         {
             // 1. Validar que el cliente exista
-            var client = await _clientRepository.GetByIdentificationAsync(request.ClientId);
-            if (client == null)
+            var client = await _clientService.GetClientByIdAsync(Convert.ToInt32(request.ClientId));
+            if (!client.IsSuccesfull)
             {
                 return GenericResult.ErrorResult(ResultCode.NotFound, $"No existe un cliente registrado con la identificación {request.ClientId}.");
             }
 
             // 2. Validar que el tipo de producto exista en el catálogo
-            var productTypeExists = await _productTypeRepository.ExistsAsync(request.ProductTypeId);
+            var productTypeExists = await _productTypeService.ExistsAsync(request.ProductTypeId);
             if (!productTypeExists)
             {
                 return GenericResult.ErrorResult(ResultCode.NotFound, $"El Tipo de Producto con ID {request.ProductTypeId} no existe en el catálogo.");
@@ -63,7 +63,7 @@ namespace Business.Services
             {
                 Name = request.Name,
                 ProductTypeId = request.ProductTypeId,
-                ClientId = client.Id,
+                ClientId = ((Client)client.Data!).Id,
                 IsActive = true
             };
 
