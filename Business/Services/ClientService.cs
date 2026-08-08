@@ -1,14 +1,15 @@
-﻿using Business.Services.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Business.Services.Interfaces;
+using DataAccess.Repositories;
 using DataAccess.Repositories.Interfaces;
 using Models.Common;
 using Models.Entities;
 using Models.Requests;
 using Models.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Services
 {
@@ -109,6 +110,11 @@ namespace Business.Services
 
             await _clientRepository.DeleteAsync(id);
             return GenericResult.SuccessResult(code: ResultCode.Deleted);
+        }
+
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await _clientRepository.ExistsAsync(id);
         }
     }
 }

@@ -16,5 +16,6 @@ namespace Business.Services.Interfaces
         Task<GenericResult> CreateClientAsync(CreateClientRequest request);
         Task<GenericResult> UpdateClientAsync(UpdateClientRequest request);
         Task<GenericResult> DeleteClientAsync(int id);
+        Task<bool> ExistsAsync(int id);
     }
 }

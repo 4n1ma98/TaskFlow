@@ -16,5 +16,6 @@ namespace DataAccess.Repositories.Interfaces
         Task<Client> UpdateAsync(Client client);
         Task<bool> DeleteAsync(int id);
         Task<bool> HasProductsAsync(int clientId);
+        Task<bool> ExistsAsync(int id);
     }
 }

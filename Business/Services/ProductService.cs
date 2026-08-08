@@ -46,8 +46,8 @@ namespace Business.Services
         public async Task<GenericResult> CreateProductAsync(CreateProductRequest request)
         {
             // 1. Validar que el cliente exista
-            var client = await _clientService.GetClientByIdAsync(request.ClientId);
-            if (!client.IsSuccessful)
+            var clientExists = await _clientService.ExistsAsync(request.ClientId);
+            if (!clientExists)
             {
                 return GenericResult.ErrorResult(ResultCode.NotFound, $"No existe un cliente registrado con ID {request.ClientId}.");
             }
@@ -69,7 +69,7 @@ namespace Business.Services
             };
 
             var createdProduct = await _productRepository.CreateAsync(newProduct);
-            return GenericResult.SuccessResult(data: createdProduct, code: ResultCode.Created);
+            return GenericResult.SuccessResult(code: ResultCode.Created);
         }
     }
 }

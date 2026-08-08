@@ -25,3 +25,4 @@ docker-compose.override.yml
 
 # Rider (opcional)
 .idea/
+/FRONT/financial-products-front

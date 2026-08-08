@@ -63,5 +63,8 @@ namespace DataAccess.Repositories
         {
             return await _context.Products.AnyAsync(p => p.ClientId == clientId);
         }
+
+        public async Task<bool> ExistsAsync(int id)
+            => await _context.Clients.AnyAsync(c => c.Id == id);
     }
 }
