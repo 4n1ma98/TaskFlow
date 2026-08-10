@@ -1,0 +1,80 @@
+.client-form {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: clamp(1.5rem, 2vw, 2.2rem);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  box-sizing: border-box;
+  backdrop-filter: blur(4px);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.3rem;
+}
+
+label {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+input,
+select {
+  border-radius: 12px;
+}
+
+small {
+  color: #b91c1c;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.form-actions button[type="submit"] {
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--primary-dark) 100%
+  );
+  border-color: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 12px 25px rgba(37, 99, 235, 0.2);
+}
+
+.form-actions button[type="submit"]:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, #1e40af 100%);
+  border-color: var(--primary-dark);
+}
+
+.form-actions button[type="button"] {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: var(--muted);
+}
+
+.form-actions button[type="button"]:hover:not(:disabled) {
+  background: #f8fafc;
+}
+
+.error-message {
+  margin-bottom: 1.25rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  background: var(--danger-soft);
+  color: #991b1b;
+  font-size: 0.9rem;
+}

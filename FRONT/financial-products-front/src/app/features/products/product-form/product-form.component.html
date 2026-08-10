@@ -1,0 +1,88 @@
+<h2>Nuevo producto financiero</h2>
+
+@if (loadingData) {
+  <p>Cargando información...</p>
+} @else {
+  @if (errorMessage) {
+    <p>
+      {{ errorMessage }}
+    </p>
+  }
+
+  <form [formGroup]="productForm" (ngSubmit)="submit()">
+    <div>
+      <label for="name"> Nombre del producto </label>
+
+      <input id="name" type="text" formControlName="name" />
+
+      @if (
+        productForm.controls.name.invalid && productForm.controls.name.touched
+      ) {
+        <small> El nombre del producto es obligatorio. </small>
+      }
+    </div>
+
+    <br />
+
+    <div>
+      <label for="productTypeId"> Tipo de producto </label>
+
+      <select id="productTypeId" formControlName="productTypeId">
+        <option [value]="0">Seleccione un tipo de producto</option>
+
+        @for (productType of productTypes; track productType.id) {
+          <option [value]="productType.id">
+            {{ productType.name }}
+          </option>
+        }
+      </select>
+
+      @if (
+        productForm.controls.productTypeId.invalid &&
+        productForm.controls.productTypeId.touched
+      ) {
+        <small> Debe seleccionar un tipo de producto. </small>
+      }
+    </div>
+
+    <br />
+
+    <div>
+      <label for="clientId"> Cliente </label>
+
+      <select id="clientId" formControlName="clientId">
+        <option [value]="0">Seleccione un cliente</option>
+
+        @for (client of clients; track client.id) {
+          <option [value]="client.id">
+            {{ client.identificationNumber }} - {{ client.firstName }}
+            {{ client.lastName }}
+          </option>
+        }
+      </select>
+
+      @if (
+        productForm.controls.clientId.invalid &&
+        productForm.controls.clientId.touched
+      ) {
+        <small> Debe seleccionar un cliente. </small>
+      }
+    </div>
+
+    <br />
+
+    @if (errorMessage) {
+      <p>
+        {{ errorMessage }}
+      </p>
+    }
+
+    <button type="submit" [disabled]="saving">
+      {{ saving ? "Guardando..." : "Guardar" }}
+    </button>
+
+    <button type="button" (click)="cancel()" [disabled]="saving">
+      Cancelar
+    </button>
+  </form>
+}

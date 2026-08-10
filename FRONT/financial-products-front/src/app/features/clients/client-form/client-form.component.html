@@ -1,0 +1,131 @@
+<div class="client-form">
+  <h2>
+    {{ isEditMode ? "Editar cliente" : "Nuevo cliente" }}
+  </h2>
+
+  @if (errorMessage) {
+    <div class="error-message">
+      {{ errorMessage }}
+    </div>
+  }
+
+  <form [formGroup]="clientForm" (ngSubmit)="submit()">
+    <div class="form-field">
+      <label for="documentType">Tipo de documento</label>
+
+      <select id="documentType" formControlName="documentType">
+        <option value="">Seleccione...</option>
+        <option value="CC">Cédula de ciudadanía</option>
+        <option value="CE">Cédula de extranjería</option>
+        <option value="TI">Tarjeta de identidad</option>
+        <option value="NIT">NIT</option>
+      </select>
+
+      @if (
+        clientForm.controls.documentType.touched &&
+        clientForm.controls.documentType.invalid
+      ) {
+        <small>El tipo de documento es obligatorio.</small>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="identificationNumber"> Número de identificación </label>
+
+      <input
+        id="identificationNumber"
+        type="text"
+        formControlName="identificationNumber"
+      />
+
+      @if (
+        clientForm.controls.identificationNumber.touched &&
+        clientForm.controls.identificationNumber.invalid
+      ) {
+        <small> El número de identificación es obligatorio. </small>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="firstName">Nombre</label>
+
+      <input id="firstName" type="text" formControlName="firstName" />
+
+      @if (
+        clientForm.controls.firstName.touched &&
+        clientForm.controls.firstName.invalid
+      ) {
+        <small>El nombre es obligatorio.</small>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="lastName">Apellido</label>
+
+      <input id="lastName" type="text" formControlName="lastName" />
+
+      @if (
+        clientForm.controls.lastName.touched &&
+        clientForm.controls.lastName.invalid
+      ) {
+        <small>El apellido es obligatorio.</small>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="address">Dirección</label>
+
+      <input id="address" type="text" formControlName="address" />
+
+      @if (
+        clientForm.controls.address.touched &&
+        clientForm.controls.address.invalid
+      ) {
+        <small>La dirección es obligatoria.</small>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="phoneNumber">Teléfono</label>
+
+      <input id="phoneNumber" type="text" formControlName="phoneNumber" />
+
+      @if (
+        clientForm.controls.phoneNumber.touched &&
+        clientForm.controls.phoneNumber.invalid
+      ) {
+        <small>El teléfono es obligatorio.</small>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="email">Correo electrónico</label>
+
+      <input id="email" type="email" formControlName="email" />
+
+      @if (
+        clientForm.controls.email.touched &&
+        clientForm.controls.email.hasError("required")
+      ) {
+        <small>El correo electrónico es obligatorio.</small>
+      }
+
+      @if (
+        clientForm.controls.email.touched &&
+        clientForm.controls.email.hasError("email")
+      ) {
+        <small> El formato del correo electrónico no es válido. </small>
+      }
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="loading">
+        {{ loading ? "Guardando..." : "Guardar" }}
+      </button>
+
+      <button type="button" (click)="cancel()" [disabled]="loading">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>

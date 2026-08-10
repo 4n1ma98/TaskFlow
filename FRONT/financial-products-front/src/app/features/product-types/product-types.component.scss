@@ -1,0 +1,63 @@
+:host {
+  display: block;
+  padding: 2rem clamp(1rem, 2vw, 2rem) 3rem;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+h1 {
+  margin: 0 0 1.5rem;
+  color: var(--text);
+  font-size: clamp(2rem, 2.5vw, 2.7rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+}
+
+.table-wrap {
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--panel);
+}
+
+th,
+td {
+  padding: 1rem 1.1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  background: linear-gradient(180deg, #f8fbff 0%, #f1f5f9 100%);
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+td {
+  color: var(--muted);
+  font-size: 0.95rem;
+  vertical-align: middle;
+}
+
+tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+tbody tr:hover {
+  background: var(--panel-alt);
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}

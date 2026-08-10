@@ -1,0 +1,104 @@
+@if (!showForm) {
+  <button type="button" (click)="openCreateForm()">Nuevo cliente</button>
+
+  @if (loading) {
+    <p>Cargando clientes...</p>
+  }
+
+  @if (errorMessage) {
+    <div class="error-message">
+      {{ errorMessage }}
+    </div>
+  }
+
+  @if (!loading && clients.length === 0) {
+    <p>No hay clientes registrados.</p>
+  }
+
+  @if (!loading && clients.length > 0) {
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tipo documento</th>
+            <th>Identificación</th>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (client of clients; track client.id) {
+            <tr>
+              <td>{{ client.id }}</td>
+              <td>{{ client.documentType }}</td>
+              <td>{{ client.identificationNumber }}</td>
+              <td>{{ client.firstName }} {{ client.lastName }}</td>
+              <td>{{ client.address ?? "-" }}</td>
+              <td>{{ client.phoneNumber ?? "-" }}</td>
+              <td>{{ client.email ?? "-" }}</td>
+
+              <td class="actions">
+                <button type="button" (click)="openEditForm(client)">
+                  Editar
+                </button>
+
+                <button
+                  type="button"
+                  (click)="requestDeleteClient(client)"
+                  [disabled]="loading"
+                >
+                  Eliminar
+                </button>
+
+                <button type="button" (click)="viewProducts(client)">
+                  Ver productos
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      @if (showDeleteModal && clientToDelete) {
+        <div class="delete-modal-backdrop" (click)="cancelDeleteClient()">
+          <div class="delete-modal" (click)="$event.stopPropagation()">
+            <h3>Eliminar cliente</h3>
+            <p>
+              ¿Está seguro de que desea eliminar al cliente
+              {{ clientToDelete.firstName }} {{ clientToDelete.lastName }}?
+            </p>
+
+            <div class="delete-modal-actions">
+              <button
+                type="button"
+                class="confirm-button"
+                (click)="confirmDeleteClient()"
+              >
+                Aceptar
+              </button>
+              <button
+                type="button"
+                class="cancel-button"
+                (click)="cancelDeleteClient()"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+} @else {
+  <app-client-form
+    [client]="clientToEdit"
+    (saved)="onClientSaved()"
+    (cancelled)="closeForm()"
+  >
+  </app-client-form>
+}

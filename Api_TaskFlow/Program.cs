@@ -20,6 +20,17 @@ namespace Api_TaskFlow
             builder.Services.AddDbContext<FinancialProductsDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngular", policy =>
+                {
+                    policy
+                        .WithOrigins("http://localhost:4200")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
             // Add services to the container.
             builder.Services.AddScoped<IClientRepository, ClientRepository>();
             builder.Services.AddScoped<IClientService, ClientService>();
@@ -56,6 +67,7 @@ namespace Api_TaskFlow
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseCors("AllowAngular");
 
             app.UseAuthorization();
 

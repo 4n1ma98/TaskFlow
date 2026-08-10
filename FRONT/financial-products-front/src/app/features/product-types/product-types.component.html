@@ -1,0 +1,35 @@
+<h1>Tipos de productos</h1>
+
+@if (loading) {
+  <p>Cargando tipos de productos...</p>
+}
+
+@if (errorMessage) {
+  <p>{{ errorMessage }}</p>
+}
+
+@if (!loading && !errorMessage) {
+  @if (productTypes.length === 0) {
+    <p>No hay tipos de productos registrados.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (productType of productTypes; track productType.id) {
+          <tr>
+            <td>{{ productType.id }}</td>
+            <td>{{ productType.name }}</td>
+            <td>{{ productType.description ?? "-" }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+}

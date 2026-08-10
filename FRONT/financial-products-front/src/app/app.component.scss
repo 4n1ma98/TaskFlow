@@ -1,0 +1,46 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.app-nav {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1.5rem;
+  background: rgba(15, 23, 42, 0.88);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.app-nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 150px;
+  padding: 0.75rem 1.1rem;
+  border-radius: 10px;
+  color: #e2e8f0;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: all 0.2s ease;
+}
+
+.app-nav a:hover {
+  background: rgba(148, 163, 184, 0.12);
+}
+
+.app-nav a.active {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.22);
+}
+
+.page-shell {
+  display: block;
+}

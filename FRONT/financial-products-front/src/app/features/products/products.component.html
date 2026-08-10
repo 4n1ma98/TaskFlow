@@ -1,0 +1,71 @@
+<h1>Productos financieros</h1>
+
+@if (!showForm) {
+  <button type="button" (click)="openCreateForm()">Nuevo producto</button>
+
+  <hr />
+
+  <h2>Consultar productos por cliente</h2>
+
+  <label for="identification"> Número de identificación </label>
+
+  <input
+    id="identification"
+    type="text"
+    [(ngModel)]="identification"
+    placeholder="Ingrese la identificación"
+  />
+
+  <button type="button" (click)="searchProducts()" [disabled]="loadingData">
+    {{ loadingData ? "Consultando..." : "Consultar" }}
+  </button>
+
+  @if (successMessage) {
+    <p>
+      {{ successMessage }}
+    </p>
+  }
+
+  @if (errorMessage) {
+    <p>
+      {{ errorMessage }}
+    </p>
+  }
+
+  @if (hasSearched && !loadingData && !errorMessage) {
+    @if (products.length === 0) {
+      <p>No hay productos financieros asociados a este cliente.</p>
+    } @else {
+      <table>
+        <thead>
+          <tr>
+            <th>Tipo de documento</th>
+            <th>Identificación</th>
+            <th>Cliente</th>
+            <th>Producto</th>
+            <th>Tipo de producto</th>
+            <th>Activo</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (product of products; track product.productName) {
+            <tr>
+              <td>{{ product.documentType }}</td>
+              <td>{{ product.identificationNumber }}</td>
+              <td>{{ product.fullName }}</td>
+              <td>{{ product.productName }}</td>
+              <td>{{ product.productTypeName }}</td>
+              <td>{{ product.isActive ? "Sí" : "No" }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  }
+} @else {
+  <app-product-form
+    (saved)="onProductCreated()"
+    (cancelled)="closeForm()"
+  ></app-product-form>
+}
